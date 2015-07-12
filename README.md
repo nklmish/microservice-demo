@@ -1,5 +1,5 @@
 # microservice-demo
-The sample application consists of microservices backed by spring and netflix to build a simple catalog service. 
+The sample application consists of microservices backed by spring and netflix components to build a simple catalog service. 
 
 The catalog service communicates wth :
 1. Product-service : Simulates generating product. 
@@ -10,13 +10,14 @@ Apart from these there are eureka-service which acts as service registry and zuu
 
 #Launching 
 In order to launch all microservices, execute 
+
 ```sh run-all.sh```
 
 Once all services are up and running, you can visit http://localhost:8761/ to monitor all services registered with eureka.
 
 #Sample request
 
-Note, I am using [jq!](http://stedolan.github.io/jq/) library for json parsing. If you prefer some different library then you need to re-adjust all commands pasted below.
+Note, I am using [jq](http://stedolan.github.io/jq/) library for json parsing. If you prefer some different library then you need to re-adjust all commands pasted below.
 
 #Determing ports, ip address, hostname and service name
 Execute 
@@ -25,6 +26,7 @@ curl -s -H "Accept: application/json" http://localhost:8761/eureka/apps | jq '.a
 ```
 
 **Replace the port under which zuul-service is running on your computer** and  execute
+
 ```
 curl -s localhost:44953/catalog-service/catalog/100 | jq .
 ```
@@ -58,9 +60,9 @@ You will see sample response
 }
 ```
 Now If you will take the comment-service down, and execute 
-
+```
 curl -s localhost:44953/catalog-service/catalog/100 | jq .
-
+```
 You will notice that only comments will be missing from the response and still your application will be working . E.g.
 
 ```json
