@@ -15,11 +15,11 @@ In order to launch all microservices you can either ```cd``` to particular micro
 ```
 ./gradlew clean build bootRun
 ``` 
-or if you want to lauch all services at one then execute
+or if you want to lauch all services at once then execute
 
 ```sh run-all.sh```
 
-Once all services are up and running, you can visit http://localhost:8761/ to monitor all services registered with eureka.
+You can visit http://localhost:8761/ to monitor all services registered with eureka.
 
 #Sample request
 
