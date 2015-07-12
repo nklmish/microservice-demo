@@ -9,7 +9,12 @@ The catalog service communicates wth :
 Apart from these there are eureka-service which acts as service registry and zuul-service which acts as proxy.
 
 #Launching 
-In order to launch all microservices, execute 
+In order to launch all microservices you can either ```cd``` to particular microservice and  execute
+
+```
+./gradlew clean build bootRun
+``` 
+or if you want to lauch all services at one then execute
 
 ```sh run-all.sh```
 
