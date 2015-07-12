@@ -1,0 +1,20 @@
+info:
+  component: zuul-service
+
+server:
+  port: 0
+
+zuul:
+  ignoredServices: "*"
+  routes:
+    catalog-service:
+      path: /catalog-service/**
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
