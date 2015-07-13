@@ -7,7 +7,9 @@ The catalog service communicates wth :
 2. Price-service : Simulates price calculation for a given product.
 3. Comment-service : Simulates comments generation for a given product.
 
-Apart from these there are eureka-service which acts as service registry and zuul-service which acts as proxy.
+Apart from these there is :
+1. Eureka-service : Acts as a service registry.
+2. Zuul-service : Acts as a proxy.
 
 #Launching 
 In order to launch all microservices you can either ```cd``` to particular microservice and  execute
@@ -69,7 +71,7 @@ Now If you will take the comment-service down, and execute
 ```
 curl -s localhost:44953/catalog-service/catalog/100 | jq .
 ```
-You will notice that only comments will be missing from the response and still your application will be working . E.g.
+You will notice that only comments will be missing from the response and still your application will work. E.g.
 
 ```json
 {
