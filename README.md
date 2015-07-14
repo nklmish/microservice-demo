@@ -1,6 +1,9 @@
 # microservice-demo
 The sample application consists of microservices backed by spring and netflix components to build a simple catalog service. 
 
+# Dependecies
+Jdk-8
+
 The catalog service communicates wth :
 
 1. Product-service : Simulates generating product. 
