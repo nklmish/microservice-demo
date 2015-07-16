@@ -8,6 +8,7 @@ The catalog service communicates wth :
 3. Comment-service : Simulates comments generation for a given product.
 
 Apart from these there is :
+
 1. Eureka-service : Acts as a service registry.
 2. Zuul-service : Acts as a proxy.
 
