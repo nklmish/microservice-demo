@@ -1,13 +1,13 @@
 # microservice-demo
 The sample application consists of microservices backed by spring and netflix components to build a simple catalog service. 
 
-The catalog service communicates wth :
+The catalog service communicates with :
 
 1. Product-service : Simulates generating product. 
 2. Price-service : Simulates price calculation for a given product.
 3. Comment-service : Simulates comments generation for a given product.
 
-Apart from these there is :
+Apart from these there are:
 
 1. Eureka-service : Acts as a service registry.
 2. Zuul-service : Acts as a proxy.
