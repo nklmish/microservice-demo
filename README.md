@@ -1,9 +1,6 @@
 # microservice-demo
 The sample application consists of microservices backed by spring and netflix components to build a simple catalog service. 
 
-# Dependecies
-Jdk-8
-
 The catalog service communicates wth :
 
 1. Product-service : Simulates generating product. 
@@ -13,6 +10,9 @@ The catalog service communicates wth :
 Apart from these there is :
 1. Eureka-service : Acts as a service registry.
 2. Zuul-service : Acts as a proxy.
+
+# Dependecies
+Jdk-8
 
 #Launching 
 In order to launch all microservices you can either ```cd``` to particular microservice and  execute
