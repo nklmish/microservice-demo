@@ -1,0 +1,56 @@
+eurekaService:
+  image: docker/eureka-service
+  restart: always
+  ports:
+    - "8761:8761"
+
+zuulService:
+  image: docker/zuul-service
+  restart: always
+  ports:
+    - "8765:8765"
+  links:
+    - eurekaService
+    - catalogService
+
+priceService:
+  image: docker/price-service
+  restart: always
+  ports:
+    - "8090:8090"
+  volumes:
+    - $PWD/logs:/logs
+  links:
+    - eurekaService
+
+productService:
+  image: docker/product-service
+  restart: always
+  volumes:
+    - $PWD/logs:/logs
+  links:
+    - eurekaService
+
+commentService:
+  image: docker/comment-service
+  restart: always
+  volumes:
+    - $PWD/logs:/logs
+  links:
+    - eurekaService
+
+rabbitmq:
+  image: rabbitmq:3-management
+  restart: always
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+
+catalogService:
+  image: docker/catalog-service
+  restart: always
+  volumes:
+    - $PWD/logs:/logs
+  links:
+    - eurekaService
+    - rabbitmq
