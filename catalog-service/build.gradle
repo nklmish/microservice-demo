@@ -1,11 +1,11 @@
 group 'microservicedemo'
-version '1.0-SNAPSHOT'
 
 buildscript {
     ext {
         springBootVersion = '1.2.4.RELEASE'
         springCloudVersion = '1.0.2.RELEASE'
         groovyVersion = '2.4.3'
+        dockerVersion = '1.2'
     }
     repositories {
         mavenLocal()
@@ -14,6 +14,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("se.transmode.gradle:gradle-docker:${dockerVersion}")
     }
 }
 
@@ -22,6 +23,19 @@ apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
+apply plugin: 'docker'
+
+group = 'docker'
+mainClassName = 'com.nklmish.cs.catalogs.Application'
+
+distDocker {
+    exposePort 8090
+    setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
+}
+
+docker {
+    baseImage = 'java:8'
+}
 
 sourceCompatibility = 1.8
 sourceCompatibility = 1.8

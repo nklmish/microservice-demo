@@ -1,3 +1,6 @@
+spring:
+  profiles: docker
+
 server:
   port: 8761
 
