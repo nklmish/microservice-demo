@@ -23,3 +23,17 @@ endpoints:
   health:
     sensitive: false
 
+---
+spring:
+  profiles: docker
+
+server:
+  port: 8765
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://eurekaService:8761/eureka/
+
