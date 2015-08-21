@@ -18,8 +18,8 @@ Apart from these there are:
 Docker and docker-compose, refer to https://docs.docker.com for installation
 
 #For Mac users 
-If you are on mac then please replace localhost with IP address allocated to your docker instance.
-For e.g. If you are using `boot2docker` then you can execute `boot2docker ip` and you will get something like `192.168.59.103`
+If you are on mac then please replace localhost with IP address allocated to your docker machine.
+For e.g. If you are using `docker toolbox` then you can execute `docker-machine ip <machine-name>` and you will get something like `192.168.59.103`
 
 #Launching 
 Build all projects by executing
