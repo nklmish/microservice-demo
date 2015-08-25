@@ -1,4 +1,6 @@
 # microservice-demo
+For docker users run ```git checkout docker``` and refer to its README.
+
 The sample application consists of microservices backed by spring and netflix components to build a simple catalog service. 
 
 The catalog service communicates with :
