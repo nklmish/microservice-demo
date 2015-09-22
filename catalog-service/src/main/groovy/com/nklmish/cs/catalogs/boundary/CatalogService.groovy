@@ -2,6 +2,8 @@ package com.nklmish.cs.catalogs.boundary
 
 import com.nklmish.cs.catalogs.integration.ProductBuilder
 import com.nklmish.cs.catalogs.model.Catalog
+import com.nklmish.cs.catalogs.model.Product
+import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,6 +13,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 
 @RestController
 @RequestMapping("/catalog")
+@Slf4j
 class CatalogService {
 
     ProductBuilder productBuilder
@@ -21,11 +24,12 @@ class CatalogService {
     }
 
     @RequestMapping(value = "/{productId}", produces = APPLICATION_JSON_VALUE)
-    def findCatalog(@PathVariable Integer productId) {
-        def product = productBuilder.fetchProduct(productId)
+    Catalog findCatalog(@PathVariable Integer productId) {
+        log.debug("retrieving catalog for productId {}", productId)
+        Product product = productBuilder.fetchProduct(productId)
         product.setComments(productBuilder.fetchComments(productId))
         product.setPrice(productBuilder.fetchPrice(productId))
 
-        new Catalog(productId, product)
+        return new Catalog(productId, product)
     }
 }
