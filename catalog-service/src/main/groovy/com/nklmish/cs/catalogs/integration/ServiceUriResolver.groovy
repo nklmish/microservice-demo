@@ -1,30 +1,29 @@
 package com.nklmish.cs.catalogs.integration
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient
 import org.springframework.stereotype.Component
 
 @Component
+@Slf4j
 class ServiceUriResolver {
-    private static final Logger LOG = LoggerFactory.getLogger(ServiceUriResolver.class)
 
     LoadBalancerClient loadBalancerClient
 
-    String defaultUrl = "http://127.0.0.1:8080"
+    static final String defaultUrl = "http://127.0.0.1:8080"
 
     @Autowired
     ServiceUriResolver(final LoadBalancerClient loadBalancerClient) {
         this.loadBalancerClient = loadBalancerClient
     }
 
-    def resolve(String id) {
+    String resolve(String id) {
         try {
-            loadBalancerClient.choose(id).uri.toString()
+            return loadBalancerClient.choose(id).uri.toString()
         } catch (RuntimeException e) {
-            LOG.error("Failed to resolve service {}, details {}", id, e.getMessage())
-            defaultUrl
+            log.error("Failed to resolve service {}, details {}", id, e.getMessage())
+            return defaultUrl
         }
     }
 }
