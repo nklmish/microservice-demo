@@ -4,7 +4,6 @@ buildscript {
     ext {
         springBootVersion = '1.2.4.RELEASE'
         springCloudVersion = '1.0.2.RELEASE'
-        groovyVersion = '2.4.3'
         dockerVersion = '1.2'
     }
     repositories {
@@ -19,14 +18,12 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
 apply plugin: 'docker'
 
 group = 'docker'
-mainClassName = 'com.nklmish.cs.comments.Application'
 
 distDocker {
     exposePort 8090
@@ -40,6 +37,8 @@ docker {
 sourceCompatibility = 1.8
 sourceCompatibility = 1.8
 
+mainClassName = "com.nklmish.cs.comments.Application"
+
 repositories {
     mavenLocal()
     mavenCentral()
@@ -47,7 +46,6 @@ repositories {
 }
 
 dependencies {
-    compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
     compile "org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}"
     compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
     compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
