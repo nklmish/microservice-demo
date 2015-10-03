@@ -18,12 +18,7 @@ Apart from these there are:
 Jdk-8
 
 #Launching 
-In order to launch all microservices you can either ```cd``` to particular microservice and  execute
-
-```
-./gradlew clean build bootRun
-``` 
-or if you want to lauch all services at once then execute
+In order to launch all microservices you can execute
 
 ```sh run-all.sh```
 
@@ -31,7 +26,8 @@ You can visit http://localhost:8761/ to monitor all services registered with eur
 
 #Sample request
 
-Note, I am using [jq](http://stedolan.github.io/jq/) library for filtering json data. If you prefer some different library then you need to re-adjust all commands pasted below.
+Note, I am using [jq](http://stedolan.github.io/jq/) library for filtering json data. If you prefer some different library
+then you need to re-adjust all commands pasted below.
 
 #Determing ports, ip address, hostname and service name
 Execute 
@@ -39,7 +35,8 @@ Execute
 curl -s -H "Accept: application/json" http://localhost:8761/eureka/apps | jq '.applications.application[] | {port:.instance.port["$"], ipAddress:.instance.ipAddr,hostName: .instance.hostName, serviceName:.name}'
 ```
 
-**Replace the port under which zuul-service is running on your computer** and  execute ```curl```. For e.g. on my machine zuul-service is running on port 44953, so we can execute
+**Replace the port under which zuul-service is running on your computer** and  execute ```curl```. For e.g. on my machine
+zuul-service is running on port 44953, so we can execute
 
 ```
 curl -s localhost:44953/catalog-service/catalog/100 | jq .
