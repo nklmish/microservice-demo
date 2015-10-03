@@ -22,7 +22,7 @@ class ServiceUriResolver {
         try {
             return loadBalancerClient.choose(id).uri.toString()
         } catch (RuntimeException e) {
-            log.error("Failed to resolve service {}, details {}", id, e.getMessage())
+            log.error("Failed to resolve service {}, details {}", id, e.message)
             return defaultUrl
         }
     }

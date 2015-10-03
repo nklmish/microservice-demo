@@ -25,7 +25,7 @@ class ProductBuilder {
     Product fetchProduct(int id) {
         String uri = serviceUriResolver.resolve("product-service") + "/product/${id}"
         log.debug("fetching product {} from {} ", id, uri)
-        return restTemplate.getForObject(uri, Product.class)
+        return restTemplate.getForObject(uri, Product)
     }
 
     @SuppressWarnings("unused")
@@ -38,7 +38,7 @@ class ProductBuilder {
     Price fetchPrice(int productId) {
         String uri = serviceUriResolver.resolve("price-service") + "/price/${productId}"
         log.debug("fetching price for product {} from {} ", productId, uri)
-        return restTemplate.getForObject(uri, Price.class)
+        return restTemplate.getForObject(uri, Price)
     }
 
     @SuppressWarnings("unused")
@@ -51,7 +51,7 @@ class ProductBuilder {
     List<Comment> fetchComments(int productId) {
         String uri = serviceUriResolver.resolve("comment-service") + "/comment/${productId}"
         log.debug("fetching comments for product {} from {} ", productId, uri)
-        return restTemplate.getForObject(uri, List.class)
+        return restTemplate.getForObject(uri, List)
     }
 
     @SuppressWarnings("unused")
