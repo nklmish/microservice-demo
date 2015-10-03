@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
- 
-cd eureka-service; ./gradlew clean build bootRun & cd -
-cd zuul-service; ./gradlew clean build bootRun & cd -
-cd product-service; ./gradlew clean build bootRun & cd -
-cd price-service; ./gradlew clean build bootRun & cd - 
-cd comment-service; ./gradlew clean build booRun & cd - 
-cd catalog-service; ./gradlew clean build bootRun && fg
 
+./gradlew clean build
+./gradlew eureka-service:bootRun &
+./gradlew zuul-service:bootRun &
+./gradlew product-service:bootRun &
+./gradlew price-service:bootRun &
+./gradlew comment-service:bootRun &
+./gradlew catalog-service:bootRun &
