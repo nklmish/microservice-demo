@@ -15,29 +15,31 @@ Apart from these there are:
 2. Zuul-service : Acts as a proxy.
 
 # Dependecies
-Docker and docker-compose, refer to https://docs.docker.com for installation
-
-#For Mac users 
-If you are on mac then please replace localhost with IP address allocated to your docker machine.
-For e.g. If you are using `docker toolbox` then you can execute `docker-machine ip <machine-name>` and you will get something like `192.168.59.103`
+Jdk-8
 
 #Launching 
-Build all projects by executing
-```
-sh run-all.sh
-```
+In order to launch all microservices you can execute
 
-then deploy all services via 
-```
-docker-compose up -d
-```
+```sh run-all.sh```
 
-Once all services are up and running , You can visit http://localhost:8761/ to monitor all services registered with eureka.
+You can visit http://localhost:8761/ to monitor all services registered with eureka.
 
 #Sample request
 
+Note, I am using [jq](http://stedolan.github.io/jq/) library for filtering json data. If you prefer some different library
+then you need to re-adjust all commands pasted below.
+
+#Determing ports, ip address, hostname and service name
+Execute 
 ```
-curl -s localhost:8765/catalog-service/catalog/100
+curl -s -H "Accept: application/json" http://localhost:8761/eureka/apps | jq '.applications.application[] | {port:.instance.port["$"], ipAddress:.instance.ipAddr,hostName: .instance.hostName, serviceName:.name}'
+```
+
+**Replace the port under which zuul-service is running on your computer** and  execute ```curl```. For e.g. on my machine
+zuul-service is running on port 44953, so we can execute
+
+```
+curl -s localhost:44953/catalog-service/catalog/100 | jq .
 ```
 
 You will get response like this: 
@@ -70,7 +72,7 @@ You will get response like this:
 ```
 Now If you will take the comment-service down, and execute 
 ```
-curl -s localhost:8765/catalog-service/catalog/100
+curl -s localhost:44953/catalog-service/catalog/100 | jq .
 ```
 You will notice that only comments will be missing from the response and still your application will work. E.g.
 
