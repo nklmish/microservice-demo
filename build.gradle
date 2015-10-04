@@ -3,6 +3,7 @@ buildscript {
         springBootVersion = '1.2.4.RELEASE'
         springCloudVersion = '1.0.2.RELEASE'
         groovyVersion = '2.4.3'
+        dockerVersion = '1.2'
     }
     repositories {
         mavenLocal()
@@ -11,6 +12,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("se.transmode.gradle:gradle-docker:${dockerVersion}")
     }
 }
 
@@ -19,13 +21,13 @@ allprojects {
     apply plugin: 'eclipse'
 
     group 'microservicedemo'
-    version '1.0-SNAPSHOT'
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'groovy'
     apply plugin: 'spring-boot'
+    apply plugin: 'docker'
 
     sourceCompatibility = 1.8
     sourceCompatibility = 1.8
@@ -45,15 +47,26 @@ subprojects {
         compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
         compile "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
     }
+
+    docker {
+        baseImage = 'java:8'
+    }
 }
 
 project(':catalog-service') {
+    mainClassName = "com.nklmish.cs.catalogs.Application"
+
     dependencies {
         compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-netflix-hystrix-amqp:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-bus-amqp:${springCloudVersion}"
+    }
+
+    distDocker {
+        exposePort 8090
+        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
 
@@ -64,38 +77,71 @@ project(':comment-service') {
         compile "org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
     }
+
+    distDocker {
+        exposePort 8090
+        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
+    }
 }
 
 project(':eureka-service') {
+    mainClassName = 'com.nklmish.es.Application'
+
     dependencies {
         compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
         compile ("org.springframework.cloud:spring-cloud-starter-eureka-server:${springCloudVersion}") {
             exclude(module: 'servlet-api')
         }
     }
+
+    distDocker {
+        exposePort 8761
+        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
+    }
 }
 
 project(':price-service') {
+    mainClassName = "com.nklmish.ps.prices.Application"
+
     dependencies {
         compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
+    }
+
+    distDocker {
+        exposePort 8090
+        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
 
 project(':product-service') {
+    mainClassName = "com.nklmish.ps.products.Application"
+
     dependencies {
         compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
     }
+
+    distDocker {
+        exposePort 8090
+        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
+    }
 }
 
 project(':zuul-service') {
+    mainClassName = "com.nklmish.zuul.demo.Application"
+
     dependencies {
         compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-zuul:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
+    }
+
+    distDocker {
+        exposePort 8765
+        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
 
