@@ -1,0 +1,56 @@
+eurekaService:
+  image: microservicedemo/eureka-service
+  restart: always
+  ports:
+    - "8761:8761"
+
+zuulService:
+  image: microservicedemo/zuul-service
+  restart: always
+  ports:
+    - "8765:8765"
+  links:
+    - eurekaService
+    - catalogService
+
+priceService:
+  image: microservicedemo/price-service
+  restart: always
+  ports:
+    - "8090:8090"
+  volumes:
+    - $PWD/logs:/logs
+  links:
+    - eurekaService
+
+productService:
+  image: microservicedemo/product-service
+  restart: always
+  volumes:
+    - $PWD/logs:/logs
+  links:
+    - eurekaService
+
+commentService:
+  image: microservicedemo/comment-service
+  restart: always
+  volumes:
+    - $PWD/logs:/logs
+  links:
+    - eurekaService
+
+rabbitmq:
+  image: rabbitmq:3-management
+  restart: always
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+
+catalogService:
+  image: microservicedemo/catalog-service
+  restart: always
+  volumes:
+    - $PWD/logs:/logs
+  links:
+    - eurekaService
+    - rabbitmq
