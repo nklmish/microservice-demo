@@ -104,7 +104,7 @@ For e.g. If you are using `docker toolbox` then you can execute `docker-machine 
 #Launching 
 Build and deploy all projects by executing
 ```
-sh run-all-docker-on-docker.sh
+./run-all-docker-on-docker.sh
 ```
 
 Once all services are up and running , You can visit http://localhost:8761/ to monitor all services registered with eureka.
