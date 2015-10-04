@@ -164,3 +164,10 @@ You will notice that only comments will be missing from the response and still y
 }
 ```
 
+#Scaling services
+docker-compose scale serviceName=num, where serviceName refers to name of existence service declared in docker-compose.yml 
+e.g. ```docker-compose scale commentService=2```
+
+#Shutdown
+execute ```./stop-all-on-docker.sh```
+
