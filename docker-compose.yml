@@ -1,11 +1,11 @@
 eurekaService:
-  image: docker/eureka-service
+  image: microservicedemo/eureka-service
   restart: always
   ports:
     - "8761:8761"
 
 zuulService:
-  image: docker/zuul-service
+  image: microservicedemo/zuul-service
   restart: always
   ports:
     - "8765:8765"
@@ -14,7 +14,7 @@ zuulService:
     - catalogService
 
 priceService:
-  image: docker/price-service
+  image: microservicedemo/price-service
   restart: always
   ports:
     - "8090:8090"
@@ -24,7 +24,7 @@ priceService:
     - eurekaService
 
 productService:
-  image: docker/product-service
+  image: microservicedemo/product-service
   restart: always
   volumes:
     - $PWD/logs:/logs
@@ -32,7 +32,7 @@ productService:
     - eurekaService
 
 commentService:
-  image: docker/comment-service
+  image: microservicedemo/comment-service
   restart: always
   volumes:
     - $PWD/logs:/logs
@@ -47,7 +47,7 @@ rabbitmq:
     - "15672:15672"
 
 catalogService:
-  image: docker/catalog-service
+  image: microservicedemo/catalog-service
   restart: always
   volumes:
     - $PWD/logs:/logs
