@@ -170,4 +170,3 @@ e.g. ```docker-compose scale commentService=2```
 
 #Shutdown
 execute ```./stop-all-on-docker.sh```
-
