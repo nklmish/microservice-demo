@@ -54,3 +54,13 @@ catalogService:
   links:
     - eurekaService
     - rabbitmq
+
+hystrixDashboardService:
+  image: microservicedemo/hystrix-dashboard-service
+  restart: always
+  ports:
+    - "7979:7979"
+  volumes:
+    - $PWD/logs:/logs
+  links:
+    - catalogService

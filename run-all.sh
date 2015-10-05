@@ -7,3 +7,4 @@
 ./gradlew price-service:bootRun &
 ./gradlew comment-service:bootRun &
 ./gradlew catalog-service:bootRun &
+./gradlew hystrix-dashboard-service:bootRun &

@@ -4,6 +4,7 @@ buildscript {
         springCloudVersion = '1.0.2.RELEASE'
         groovyVersion = '2.4.3'
         dockerVersion = '1.2'
+        archaiusCoreVersion = '0.7.1'
     }
     repositories {
         mavenLocal()
@@ -13,6 +14,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("se.transmode.gradle:gradle-docker:${dockerVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:0.5.3.RELEASE"
     }
 }
 
@@ -28,6 +30,7 @@ subprojects {
     apply plugin: 'groovy'
     apply plugin: 'spring-boot'
     apply plugin: 'docker'
+    apply plugin: "io.spring.dependency-management"
 
     sourceCompatibility = 1.8
     sourceCompatibility = 1.8
@@ -51,6 +54,17 @@ subprojects {
     docker {
         baseImage = 'java:8'
     }
+
+//   see https://github.com/spring-cloud/spring-cloud-starters/issues/20
+    dependencyManagement {
+        dependencies {
+            dependency("org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}") {
+                exclude 'com.netflix.archaius:archaius-core'
+
+
+            }
+        }
+    }
 }
 
 project(':catalog-service') {
@@ -58,6 +72,7 @@ project(':catalog-service') {
 
     dependencies {
         compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+        compile "com.netflix.archaius:archaius-core:${archaiusCoreVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-netflix-hystrix-amqp:${springCloudVersion}"
@@ -74,6 +89,7 @@ project(':comment-service') {
     mainClassName = "com.nklmish.cs.comments.Application"
 
     dependencies {
+        compile "com.netflix.archaius:archaius-core:${archaiusCoreVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
     }
@@ -105,6 +121,7 @@ project(':price-service') {
 
     dependencies {
         compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+        compile "com.netflix.archaius:archaius-core:${archaiusCoreVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
     }
@@ -120,6 +137,7 @@ project(':product-service') {
 
     dependencies {
         compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+        compile "com.netflix.archaius:archaius-core:${archaiusCoreVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
     }
@@ -141,6 +159,21 @@ project(':zuul-service') {
 
     distDocker {
         exposePort 8765
+        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
+    }
+}
+
+project(':hystrix-dashboard-service') {
+    mainClassName = "com.nklmish.hds.Application"
+
+    dependencies {
+        compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+        compile "com.netflix.archaius:archaius-core:${archaiusCoreVersion}"
+        compile "org.springframework.cloud:spring-cloud-starter-hystrix-dashboard:${springCloudVersion}"
+    }
+
+    distDocker {
+        exposePort 7979
         setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
