@@ -5,6 +5,7 @@ buildscript {
         groovyVersion = '2.4.3'
         dockerVersion = '1.2'
         archaiusCoreVersion = '0.7.1'
+        dependencyMgmtVersion = '0.5.3.RELEASE'
     }
     repositories {
         mavenLocal()
@@ -12,9 +13,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("se.transmode.gradle:gradle-docker:${dockerVersion}")
-        classpath "io.spring.gradle:dependency-management-plugin:0.5.3.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "se.transmode.gradle:gradle-docker:${dockerVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:${dependencyMgmtVersion}"
     }
 }
 
@@ -80,7 +81,6 @@ project(':catalog-service') {
     }
 
     distDocker {
-        exposePort 8090
         setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
@@ -95,7 +95,6 @@ project(':comment-service') {
     }
 
     distDocker {
-        exposePort 8090
         setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
@@ -111,7 +110,6 @@ project(':eureka-service') {
     }
 
     distDocker {
-        exposePort 8761
         setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
@@ -127,7 +125,6 @@ project(':price-service') {
     }
 
     distDocker {
-        exposePort 8090
         setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
@@ -143,7 +140,6 @@ project(':product-service') {
     }
 
     distDocker {
-        exposePort 8090
         setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
@@ -158,7 +154,6 @@ project(':zuul-service') {
     }
 
     distDocker {
-        exposePort 8765
         setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
@@ -173,7 +168,6 @@ project(':hystrix-dashboard-service') {
     }
 
     distDocker {
-        exposePort 7979
         setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
