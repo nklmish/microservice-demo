@@ -31,6 +31,7 @@ server:
   port: 8765
 
 eureka:
+  numberRegistrySyncRetries: 0
   instance:
     preferIpAddress: true
   client:

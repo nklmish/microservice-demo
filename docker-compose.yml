@@ -64,3 +64,13 @@ hystrixDashboardService:
     - $PWD/logs:/logs
   links:
     - catalogService
+
+turbineService:
+  image: microservicedemo/turbine-service
+  restart: always
+  ports:
+    - "8989:8989"
+  volumes:
+    - $PWD/logs:/logs
+  links:
+    - rabbitmq

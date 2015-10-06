@@ -8,3 +8,4 @@
 ./gradlew comment-service:bootRun &
 ./gradlew catalog-service:bootRun &
 ./gradlew hystrix-dashboard-service:bootRun &
+./gradlew turbine-service:bootRun

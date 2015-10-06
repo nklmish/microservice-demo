@@ -42,6 +42,7 @@ spring:
   profiles: docker
 
 eureka:
+  numberRegistrySyncRetries: 0
   instance:
     hostname: docker
   client:

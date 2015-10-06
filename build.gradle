@@ -172,6 +172,19 @@ project(':hystrix-dashboard-service') {
     }
 }
 
+project(':turbine-service') {
+    mainClassName = "com.nklmish.ts.Application"
+
+    dependencies {
+        compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+        compile "org.springframework.cloud:spring-cloud-starter-turbine-amqp:${springCloudVersion}"
+    }
+
+    distDocker {
+        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
+    }
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '2.7'
 }

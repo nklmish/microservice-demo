@@ -1,0 +1,33 @@
+info:
+  component: Turbine Service
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+
+server:
+  port: 8989
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.web: DEBUG
+
+---
+spring:
+  profiles: docker
+
+app:
+  rabbitmq:
+    host: rabbitmq
+
+eureka:
+  numberRegistrySyncRetries: 0
+  instance:
+    hostname: turbine
+  client:
+    serviceUrl:
+      defaultZone: http://eurekaService:8761/eureka/
+

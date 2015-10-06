@@ -8,7 +8,8 @@ echo 'building docker images'
 ./gradlew price-service:distDocker &
 ./gradlew comment-service:distDocker &
 ./gradlew catalog-service:distDocker &
-./gradlew hystrix-dashboard-service:distDocker
-#
+./gradlew hystrix-dashboard-service:distDocker &
+./gradlew turbine-service:distDocker
+
 echo 'Deploying services on docker, view logs in app.log'
 docker-compose up -d && docker-compose logs &> app.log

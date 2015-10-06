@@ -1,4 +1,5 @@
 eureka:
+  numberRegistrySyncRetries: 0
   instance:
     preferIpAddress: true
     leaseRenewalIntervalInSeconds: 10
@@ -19,6 +20,7 @@ app:
     host: rabbitmq
 
 eureka:
+  numberRegistrySyncRetries: 0
   instance:
     preferIpAddress: true
   client:
