@@ -4,6 +4,11 @@ spring:
 server:
   port: 8761
 
+app:
+  graphite:
+    host: graphite
+    port : 2003
+
 eureka:
   numberRegistrySyncRetries: 0
   client:

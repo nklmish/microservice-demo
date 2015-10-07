@@ -3,6 +3,8 @@ eurekaService:
   restart: always
   ports:
     - "8761:8761"
+  links:
+    - graphite
 
 zuulService:
   image: microservicedemo/zuul-service
@@ -12,6 +14,7 @@ zuulService:
   links:
     - eurekaService
     - catalogService
+    - graphite
 
 priceService:
   image: microservicedemo/price-service
@@ -22,6 +25,7 @@ priceService:
     - $PWD/logs:/logs
   links:
     - eurekaService
+    - graphite
 
 productService:
   image: microservicedemo/product-service
@@ -30,6 +34,7 @@ productService:
     - $PWD/logs:/logs
   links:
     - eurekaService
+    - graphite
 
 commentService:
   image: microservicedemo/comment-service
@@ -38,6 +43,7 @@ commentService:
     - $PWD/logs:/logs
   links:
     - eurekaService
+    - graphite
 
 rabbitmq:
   image: rabbitmq:3-management
@@ -54,6 +60,7 @@ catalogService:
   links:
     - eurekaService
     - rabbitmq
+    - graphite
 
 hystrixDashboardService:
   image: microservicedemo/hystrix-dashboard-service
@@ -86,10 +93,7 @@ grafana:
 graphite:
   image: hopsoft/graphite-statsd
   restart: always
-  volumes:
-    - $PWD/graphite:/opt/graphite
-    - $PWD/graphite/log:/var/log
   ports:
-    - "80:80"
+    - "8010:80"
     - "2003:2003"
     - "8125:8125/udp"

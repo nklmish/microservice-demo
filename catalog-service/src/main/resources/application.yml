@@ -18,6 +18,9 @@ server:
 app:
   rabbitmq:
     host: rabbitmq
+  graphite:
+    host: graphite
+    port : 2003
 
 eureka:
   numberRegistrySyncRetries: 0
