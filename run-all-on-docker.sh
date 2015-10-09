@@ -11,5 +11,5 @@ echo 'building docker images'
 ./gradlew hystrix-dashboard-service:distDocker &
 ./gradlew turbine-service:distDocker
 
-echo 'Deploying services on docker, view logs in app.log'
-docker-compose up -d && docker-compose logs &> app.log
+echo 'Deploying services on docker'
+docker-compose up -d

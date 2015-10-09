@@ -3,6 +3,8 @@ eurekaService:
   restart: always
   ports:
     - "8761:8761"
+  volumes:
+    - $PWD/logs:/var/logs/microservices/
   links:
     - graphite
 
@@ -11,6 +13,8 @@ zuulService:
   restart: always
   ports:
     - "8765:8765"
+  volumes:
+    - $PWD/logs:/var/logs/microservices/
   links:
     - eurekaService
     - catalogService
@@ -22,7 +26,7 @@ priceService:
   ports:
     - "8090:8090"
   volumes:
-    - $PWD/logs:/logs
+    - $PWD/logs:/var/logs/microservices/
   links:
     - eurekaService
     - graphite
@@ -31,7 +35,7 @@ productService:
   image: microservicedemo/product-service
   restart: always
   volumes:
-    - $PWD/logs:/logs
+    - $PWD/logs:/var/logs/microservices/
   links:
     - eurekaService
     - graphite
@@ -40,7 +44,7 @@ commentService:
   image: microservicedemo/comment-service
   restart: always
   volumes:
-    - $PWD/logs:/logs
+    - $PWD/logs:/var/logs/microservices/
   links:
     - eurekaService
     - graphite
@@ -56,7 +60,7 @@ catalogService:
   image: microservicedemo/catalog-service
   restart: always
   volumes:
-    - $PWD/logs:/logs
+    - /$PWD/logs:/var/logs/microservices/
   links:
     - eurekaService
     - rabbitmq
@@ -68,7 +72,7 @@ hystrixDashboardService:
   ports:
     - "7979:7979"
   volumes:
-    - $PWD/logs:/logs
+    - $PWD/logs:/var/logs/microservices/
   links:
     - catalogService
 
@@ -78,7 +82,7 @@ turbineService:
   ports:
     - "8989:8989"
   volumes:
-    - $PWD/logs:/logs
+    - $PWD/logs:/var/logs/microservices/
   links:
     - rabbitmq
 
