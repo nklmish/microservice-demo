@@ -10,6 +10,15 @@ zuul:
     catalog-service:
       path: /catalog-service/**
 
+    price-service:
+      path: /price-service/**
+
+    product-service:
+      path: /product-service/**
+
+    comment-service:
+      path: /comment-service/**
+
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
 ribbon:
   ConnectTimeout: 3000
