@@ -3,9 +3,10 @@ buildscript {
         springBootVersion = '1.2.4.RELEASE'
         springCloudVersion = '1.0.2.RELEASE'
         groovyVersion = '2.4.3'
-        dockerVersion = '1.2'
+        dockerPluginVersion = '2.6.1'
         archaiusCoreVersion = '0.7.1'
         dependencyMgmtVersion = '0.5.3.RELEASE'
+        dropWizardVersion = '3.1.2'
     }
     repositories {
         mavenLocal()
@@ -14,8 +15,8 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "se.transmode.gradle:gradle-docker:${dockerVersion}"
         classpath "io.spring.gradle:dependency-management-plugin:${dependencyMgmtVersion}"
+        classpath "com.bmuschko:gradle-docker-plugin:${dockerPluginVersion}"
     }
 }
 
@@ -30,8 +31,10 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'groovy'
     apply plugin: 'spring-boot'
-    apply plugin: 'docker'
     apply plugin: "io.spring.dependency-management"
+    apply plugin: 'java'
+    apply plugin: 'application'
+    apply plugin: 'com.bmuschko.docker-java-application'
 
     sourceCompatibility = 1.8
     sourceCompatibility = 1.8
@@ -50,12 +53,15 @@ subprojects {
     dependencies {
         compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
         compile "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
-        compile 'io.dropwizard.metrics:metrics-graphite:3.1.2'
-        compile 'io.dropwizard.metrics:metrics-jvm:3.1.2'
+        compile "io.dropwizard.metrics:metrics-graphite:${dropWizardVersion}"
+        compile "io.dropwizard.metrics:metrics-jvm:${dropWizardVersion}"
     }
 
     docker {
-        baseImage = 'java:8'
+        url = "${dockerServerUrl}"
+        javaApplication {
+            baseImage = 'java:8'
+        }
     }
 
 //   see https://github.com/spring-cloud/spring-cloud-starters/issues/20
@@ -81,10 +87,6 @@ project(':catalog-service') {
         compile "org.springframework.cloud:spring-cloud-netflix-hystrix-amqp:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-bus-amqp:${springCloudVersion}"
     }
-
-    distDocker {
-        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
-    }
 }
 
 project(':comment-service') {
@@ -94,10 +96,6 @@ project(':comment-service') {
         compile "com.netflix.archaius:archaius-core:${archaiusCoreVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
-    }
-
-    distDocker {
-        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
 
@@ -110,10 +108,6 @@ project(':eureka-service') {
             exclude(module: 'servlet-api')
         }
     }
-
-    distDocker {
-        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
-    }
 }
 
 project(':price-service') {
@@ -124,10 +118,6 @@ project(':price-service') {
         compile "com.netflix.archaius:archaius-core:${archaiusCoreVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
-    }
-
-    distDocker {
-        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
 
@@ -140,10 +130,6 @@ project(':product-service') {
         compile "org.springframework.cloud:spring-cloud-starter-hystrix:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
     }
-
-    distDocker {
-        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
-    }
 }
 
 project(':zuul-service') {
@@ -153,10 +139,6 @@ project(':zuul-service') {
         compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-zuul:${springCloudVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-eureka:${springCloudVersion}"
-    }
-
-    distDocker {
-        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
 
@@ -168,10 +150,6 @@ project(':hystrix-dashboard-service') {
         compile "com.netflix.archaius:archaius-core:${archaiusCoreVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-hystrix-dashboard:${springCloudVersion}"
     }
-
-    distDocker {
-        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
-    }
 }
 
 project(':turbine-service') {
@@ -180,10 +158,6 @@ project(':turbine-service') {
     dependencies {
         compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
         compile "org.springframework.cloud:spring-cloud-starter-turbine-amqp:${springCloudVersion}"
-    }
-
-    distDocker {
-        setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
     }
 }
 

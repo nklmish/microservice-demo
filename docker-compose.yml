@@ -1,6 +1,8 @@
 eurekaService:
   image: microservicedemo/eureka-service
   restart: always
+  environment:
+    - SPRING_PROFILES_ACTIVE=docker
   ports:
     - "8761:8761"
   volumes:
@@ -11,6 +13,8 @@ eurekaService:
 zuulService:
   image: microservicedemo/zuul-service
   restart: always
+  environment:
+    - SPRING_PROFILES_ACTIVE=docker
   ports:
     - "8765:8765"
   volumes:
@@ -23,6 +27,8 @@ zuulService:
 priceService:
   image: microservicedemo/price-service
   restart: always
+  environment:
+    - SPRING_PROFILES_ACTIVE=docker
   ports:
     - "8090:8090"
   volumes:
@@ -34,6 +40,8 @@ priceService:
 productService:
   image: microservicedemo/product-service
   restart: always
+  environment:
+    - SPRING_PROFILES_ACTIVE=docker
   volumes:
     - $PWD/logs:/var/logs/microservices/
   links:
@@ -43,6 +51,8 @@ productService:
 commentService:
   image: microservicedemo/comment-service
   restart: always
+  environment:
+    - SPRING_PROFILES_ACTIVE=docker
   volumes:
     - $PWD/logs:/var/logs/microservices/
   links:
@@ -52,6 +62,8 @@ commentService:
 rabbitmq:
   image: rabbitmq:3-management
   restart: always
+  environment:
+    - SPRING_PROFILES_ACTIVE=docker
   ports:
     - "5672:5672"
     - "15672:15672"
@@ -59,6 +71,8 @@ rabbitmq:
 catalogService:
   image: microservicedemo/catalog-service
   restart: always
+  environment:
+    - SPRING_PROFILES_ACTIVE=docker
   volumes:
     - /$PWD/logs:/var/logs/microservices/
   links:
@@ -69,6 +83,8 @@ catalogService:
 hystrixDashboardService:
   image: microservicedemo/hystrix-dashboard-service
   restart: always
+  environment:
+    - SPRING_PROFILES_ACTIVE=docker
   ports:
     - "7979:7979"
   volumes:
@@ -79,6 +95,8 @@ hystrixDashboardService:
 turbineService:
   image: microservicedemo/turbine-service
   restart: always
+  environment:
+    - SPRING_PROFILES_ACTIVE=docker
   ports:
     - "8989:8989"
   volumes:
