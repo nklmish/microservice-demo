@@ -2,6 +2,8 @@
 
 #Instructions for Non-Docker users 
 
+Note : If you want to access grafana dashboard then either install it manually or refer to docker based version.
+
 The sample application consists of microservices backed by spring and netflix components to build a simple catalog service. 
 
 The catalog service communicates with :
@@ -101,7 +103,13 @@ Docker and docker-compose, refer to https://docs.docker.com for installation
 If you are on mac then please replace localhost with IP address allocated to your docker machine.
 For e.g. If you are using `docker toolbox` then you can execute `docker-machine ip <machine-name>` and you will get something like `192.168.59.103`
 
+#gradle.properties
+Please create/update you ```gradle.properties``` file to include docker's IP address. E.g. <br/>
+For Mac Users: ```dockerServerUrl=https://<REPLACE_WITH_DOCKER_MACHINE_IP_ADDRESS>:2376/```
+For Linux Users: ```unix:///var/run/docker.sock```
+
 #Launching 
+Setup 
 Build and deploy all projects by executing
 ```
 ./run-all-docker-on-docker.sh
