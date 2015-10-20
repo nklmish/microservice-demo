@@ -114,7 +114,7 @@ dockerServerUrl=https://<REPLACE_WITH_DOCKER_MACHINE_IP_ADDRESS>:2376/
 ```
 For Linux Users: 
 ```
-unix:///var/run/docker.sock
+dockerServerUrl=unix:///var/run/docker.sock
 ```
 
 #Launching 
