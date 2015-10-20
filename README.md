@@ -104,7 +104,7 @@ If you are on mac then please replace localhost with IP address allocated to you
 For e.g. If you are using `docker toolbox` then you can execute `docker-machine ip <machine-name>` and you will get something like `192.168.59.103`
 
 #gradle.properties
-Please create/update you ```gradle.properties``` file to include docker's IP address. E.g. <br/>
+Please create/update your's ```gradle.properties``` file to include docker's IP address. E.g. <br/>
 For Mac Users: ```dockerServerUrl=https://<REPLACE_WITH_DOCKER_MACHINE_IP_ADDRESS>:2376/```
 For Linux Users: ```unix:///var/run/docker.sock```
 
@@ -175,6 +175,11 @@ You will notice that only comments will be missing from the response and still y
 #Scaling services
 docker-compose scale serviceName=num, where serviceName refers to name of existence service declared in docker-compose.yml 
 e.g. ```docker-compose scale commentService=2```
+
+#grafana
+You can access dashboard via localhost:3000/
+username:admin<br/>
+password:admin
 
 #Shutdown
 execute ```./stop-all-on-docker.sh```
