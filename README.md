@@ -22,8 +22,9 @@ Jdk-8
 
 #Launching 
 In order to launch all microservices you can execute
-
-```./run-all.sh```
+```
+./run-all.sh
+```
 
 You can visit http://localhost:8761/ to monitor all services registered with eureka.
 
@@ -40,12 +41,12 @@ curl -s -H "Accept: application/json" http://localhost:8761/eureka/apps | jq '.a
 
 **Replace the port under which zuul-service is running on your computer** and  execute ```curl```. For e.g. on my machine
 zuul-service is running on port 44953, so we can execute
-
 ```
 curl -s localhost:44953/catalog-service/catalog/100 | jq .
 ```
 
 You will get response like this: 
+
 ```json
 {
   "product": {
@@ -73,10 +74,12 @@ You will get response like this:
   "id": 100
 }
 ```
+
 Now If you will take the comment-service down, and execute 
 ```
 curl -s localhost:44953/catalog-service/catalog/100 | jq .
 ```
+
 You will notice that only comments will be missing from the response and still your application will work. E.g.
 
 ```json
@@ -105,8 +108,14 @@ For e.g. If you are using `docker toolbox` then you can execute `docker-machine 
 
 #gradle.properties
 Please create/update your's ```gradle.properties``` file to include docker's IP address. E.g. <br/>
-For Mac Users: ```dockerServerUrl=https://<REPLACE_WITH_DOCKER_MACHINE_IP_ADDRESS>:2376/```
-For Linux Users: ```unix:///var/run/docker.sock```
+For Mac Users: 
+```
+dockerServerUrl=https://<REPLACE_WITH_DOCKER_MACHINE_IP_ADDRESS>:2376/
+```
+For Linux Users: 
+```
+unix:///var/run/docker.sock
+```
 
 #Launching 
 Setup 
@@ -177,7 +186,7 @@ docker-compose scale serviceName=num, where serviceName refers to name of existe
 e.g. ```docker-compose scale commentService=2```
 
 #grafana
-You can access dashboard via localhost:3000/
+You can access dashboard via localhost:3000/ <br/>
 username:admin<br/>
 password:admin
 
