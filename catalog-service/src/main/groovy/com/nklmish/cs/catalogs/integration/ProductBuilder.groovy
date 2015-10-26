@@ -31,7 +31,7 @@ class ProductBuilder {
         return new Product(name: "Demo Product")
     }
 
-//    @HystrixCommand(fallbackMethod = "priceFallback")
+    @HystrixCommand(fallbackMethod = "priceFallback")
     Price fetchPrice(int productId) {
         log.debug("fetching price for product {}", productId)
         return restTemplate.getForObject("http://price-service/price/$productId", Price)
@@ -42,7 +42,7 @@ class ProductBuilder {
         return null
     }
 
-//    @HystrixCommand(fallbackMethod = "commentFallback")
+    @HystrixCommand(fallbackMethod = "commentFallback")
     List<Comment> fetchComments(int productId) {
         log.debug("fetching comments for product {}", productId)
         return restTemplate.getForObject("http://comment-service/comment/$productId", List)
