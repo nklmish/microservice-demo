@@ -1,0 +1,9 @@
+rabbitmq:
+  image: rabbitmq:3-management
+  restart: always
+  environment:
+    - SPRING_PROFILES_ACTIVE=docker
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+

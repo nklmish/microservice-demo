@@ -1,6 +1,3 @@
-info:
-  component: Turbine Service
-
 endpoints:
   restart:
     enabled: true
@@ -18,6 +15,10 @@ logging:
 ---
 spring:
   profiles: docker
+
+turbine:
+  clusterNameExpression: new String("default")
+  appConfig: catalog-service
 
 app:
   rabbitmq:

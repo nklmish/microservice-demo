@@ -12,6 +12,10 @@ eureka:
 
 ---
 spring:
+  sleuth:
+    log:
+      json:
+        enabled: true
   profiles: docker
 
 server:

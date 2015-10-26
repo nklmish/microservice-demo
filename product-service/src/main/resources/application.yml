@@ -10,6 +10,11 @@ eureka:
   client:
     registryFetchIntervalSeconds: 5
 
+hystrix:
+  execution:
+    isolation:
+      strategy: SEMAPHORE
+
 ---
 spring:
   profiles: docker

@@ -16,6 +16,7 @@ zuulService:
   restart: always
   environment:
     - SPRING_PROFILES_ACTIVE=docker
+    - spring.zipkin.host=192.168.99.100
   ports:
     - "8765:8765"
   volumes:
@@ -30,8 +31,7 @@ priceService:
   restart: always
   environment:
     - SPRING_PROFILES_ACTIVE=docker
-  ports:
-    - "8090:8090"
+    - spring.zipkin.host=192.168.99.100
   volumes:
     - $PWD/logs:/var/logs/microservices/
   links:
@@ -43,6 +43,7 @@ productService:
   restart: always
   environment:
     - SPRING_PROFILES_ACTIVE=docker
+    - spring.zipkin.host=192.168.99.100
   volumes:
     - $PWD/logs:/var/logs/microservices/
   links:
@@ -54,6 +55,7 @@ commentService:
   restart: always
   environment:
     - SPRING_PROFILES_ACTIVE=docker
+    - spring.zipkin.host=192.168.99.100
   volumes:
     - $PWD/logs:/var/logs/microservices/
   links:
@@ -74,6 +76,9 @@ catalogService:
   restart: always
   environment:
     - SPRING_PROFILES_ACTIVE=docker
+    - spring.zipkin.host=192.168.99.100
+  ports:
+    - "8090:8090"
   volumes:
     - /$PWD/logs:/var/logs/microservices/
   links:

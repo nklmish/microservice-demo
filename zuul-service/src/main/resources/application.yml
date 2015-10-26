@@ -1,11 +1,14 @@
-info:
-  component: zuul-service
-
 server:
   port: 0
 
+spring:
+  sleuth:
+    zuul:
+      enabled: true
+    log:
+      json:
+        enabled: true
 zuul:
-  ignoredServices: "*"
   routes:
     catalog-service:
       path: /catalog-service/**
@@ -20,6 +23,12 @@ zuul:
       path: /comment-service/**
 
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+
+hystrix:
+  execution:
+    isolation:
+      strategy: SEMAPHORE
+
 ribbon:
   ConnectTimeout: 3000
   ReadTimeout: 60000
@@ -34,7 +43,18 @@ endpoints:
 
 ---
 spring:
+  sleuth:
+    zuul:
+      enabled: true
+    log:
+      json:
+        enabled: true
   profiles: docker
+
+hystrix:
+  execution:
+    isolation:
+      strategy: SEMAPHORE
 
 server:
   port: 8765

@@ -1,7 +1,9 @@
+server:
+  port: 0
+
 eureka:
   numberRegistrySyncRetries: 0
   instance:
-    preferIpAddress: true
     leaseRenewalIntervalInSeconds: 10
     metadataMap:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
@@ -14,6 +16,8 @@ spring:
 
 server:
   port: 8090
+
+hystrix.execution.isolation.strategy: SEMAPHORE
 
 app:
   rabbitmq:
