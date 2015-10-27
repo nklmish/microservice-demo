@@ -1,22 +1,19 @@
 package com.nklmish.cs.catalogs
 
+import com.codahale.metrics.MetricRegistry
 import com.nklmish.cs.catalogs.metrics.HealthReporter
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory
 import org.springframework.amqp.rabbit.connection.ConnectionFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient
 import org.springframework.cloud.netflix.hystrix.EnableHystrix
-import org.springframework.cloud.netflix.ribbon.RibbonLoadBalancerClient
 import org.springframework.cloud.sleuth.Sampler
 import org.springframework.cloud.sleuth.sampler.AlwaysSampler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.EnableAspectJAutoProxy
 import org.springframework.context.annotation.Profile
-import org.springframework.scheduling.annotation.EnableAsync
 
 @SpringBootApplication
 @EnableHystrix
@@ -40,8 +37,10 @@ class Application {
 
     @Bean
     @Profile(["docker", "metric"])
-    public HealthReporter createGraphiteReporter() {
-        HealthReporter healthReporter = new HealthReporter()
+    public HealthReporter createGraphiteReporter(@Value('${app.graphite.host}') String graphiteHost,
+                                                 @Value('${app.graphite.port}') int graphitePort) {
+        MetricRegistry metricRegistry = new MetricRegistry()
+        HealthReporter healthReporter = new HealthReporter(metricRegistry, graphiteHost, graphitePort)
         healthReporter.enableGraphiteReporter()
         return healthReporter
     }

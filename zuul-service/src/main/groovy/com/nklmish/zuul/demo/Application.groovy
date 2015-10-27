@@ -1,6 +1,8 @@
 package com.nklmish.zuul.demo
 
+import com.codahale.metrics.MetricRegistry
 import com.nklmish.zuul.demo.metrics.HealthReporter
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy
@@ -26,8 +28,10 @@ class Application {
 
     @Bean
     @Profile(["docker", "metric"])
-    public HealthReporter enableGraphiteReporter() {
-        HealthReporter healthReporter = new HealthReporter()
+    public HealthReporter createGraphiteReporter(@Value('${app.graphite.host}') String graphiteHost,
+                                                 @Value('${app.graphite.port}') int graphitePort) {
+        MetricRegistry metricRegistry = new MetricRegistry()
+        HealthReporter healthReporter = new HealthReporter(metricRegistry, graphiteHost, graphitePort)
         healthReporter.enableGraphiteReporter()
         return healthReporter
     }

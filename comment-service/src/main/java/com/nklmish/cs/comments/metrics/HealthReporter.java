@@ -7,27 +7,24 @@ import com.codahale.metrics.graphite.Graphite;
 import com.codahale.metrics.graphite.GraphiteReporter;
 import com.codahale.metrics.jvm.GarbageCollectorMetricSet;
 import com.codahale.metrics.jvm.MemoryUsageGaugeSet;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
 
 import static java.util.concurrent.TimeUnit.*;
 
-@Component
-@Profile({"docker", "metric"})
 public class HealthReporter {
 
-    @Autowired
     private MetricRegistry metricRegistry;
 
-    @Value("${app.graphite.host}")
     private String host;
 
-    @Value("${app.graphite.port}")
     private int port;
+
+    public HealthReporter(MetricRegistry metricRegistry, String graphiteHost, int graphitePort) {
+        this.metricRegistry = metricRegistry;
+        this.host = graphiteHost;
+        this.port = graphitePort;
+    }
 
     public void enableGraphiteReporter() {
         metricRegistry.register("garbage", new GarbageCollectorMetricSet());

@@ -1,6 +1,8 @@
 package com.nklmish.ps.products
 
+import com.codahale.metrics.MetricRegistry
 import com.nklmish.ps.products.metrics.HealthReporter
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient
@@ -26,8 +28,10 @@ class Application {
 
     @Bean
     @Profile(["docker", "metric"])
-    public HealthReporter createGraphiteReporter() {
-        HealthReporter healthReporter = new HealthReporter()
+    public HealthReporter createGraphiteReporter(@Value('${app.graphite.host}') String host,
+                                                 @Value('${app.graphite.port}') int port) {
+        MetricRegistry metricRegistry = new MetricRegistry()
+        HealthReporter healthReporter = new HealthReporter(metricRegistry, host, port)
         healthReporter.enableGraphiteReporter()
         return healthReporter
     }
