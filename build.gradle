@@ -47,6 +47,7 @@ subprojects {
         mavenLocal()
         mavenCentral()
         jcenter()
+        maven { url "http://repo.spring.io/snapshot" }
     }
 
     jar {
